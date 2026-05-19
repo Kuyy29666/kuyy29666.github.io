@@ -1,9 +1,3 @@
-# 后端连接配置
-backend:
-  name: github
-  repo: 你的GitHub用户名/你的仓库名  # ⚠️【记得修改这里！】例如：kuyy29666/kuyy29666.github.io
-  branch: main # 你的主分支名字，通常是 main 或 master
-
 # 媒体文件（图片）存放路径
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
@@ -23,7 +17,7 @@ collections:
 
 backend:
   name: github
-  repo: 你的GitHub用户名/你的仓库名
+  repo: kuyy29666
   branch: main
   # 💡 新增下面两行，借用社区的免费网关（或者使用 Netlify 托管）
   base_url: https://proxy.decapcms.org
