@@ -1,79 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== 设计变量（学术风） ===== */
 :root {
   --bg: #fbfbfb;
-  --text: #222222;
-  --muted: #666666;
+  --text: #222;
+  --muted: #666;
   --accent: #1d4ed8;
-
-  --max-width: 68ch;
-
-  --font-sans:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Inter",
-    "Segoe UI",
-    sans-serif;
-
-  --font-serif:
-    "Georgia",
-    "Merriweather",
-    "Times New Roman",
-    serif;
-
-  --font-mono:
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Monaco,
-    Consolas,
-    monospace;
 }
 
-/* 全局基础 */
+/* 基础 */
 body {
-  margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-serif);
-  line-height: 1.75;
-  font-size: 18px;
-}
-
-/* 链接 */
-a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* 代码 */
-code {
-  font-family: var(--font-mono);
-  background: #f3f4f6;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-pre {
-  font-family: var(--font-mono);
-  background: #f6f6f6;
-  padding: 16px;
-  border-radius: 8px;
-  overflow-x: auto;
-}
-
-/* 标题系统 */
-h1, h2, h3 {
-  font-family: var(--font-sans);
-  color: var(--text);
-  letter-spacing: -0.02em;
-}
-
-/* 容器 */
-.container {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 64px 24px;
+  font-family: Georgia, serif;
 }
