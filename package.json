@@ -15,7 +15,8 @@
     "astro": "^6.3.3",
     "katex": "^0.16.47",
     "rehype-katex": "^7.0.1",
-    "remark-math": "^6.0.0"
+    "remark-math": "^6.0.0",
+    "remark-toc": "^9.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.5.0",
