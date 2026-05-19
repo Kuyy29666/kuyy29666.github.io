@@ -1,26 +1,87 @@
 ---
+const posts = await Astro.glob('./posts/*.md');
+
+posts.sort((a, b) =>
+  new Date(b.frontmatter.date) - new Date(a.frontmatter.date)
+);
 ---
 
-<html>
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <title>gahs notes</title>
+
+    <style>
+      body {
+        background: #f5f1e8;
+        color: #2a2a2a;
+        font-family:
+          "Iowan Old Style",
+          "Palatino Linotype",
+          serif;
+
+        margin: 0;
+      }
+
+      main {
+        max-width: 760px;
+        margin: auto;
+        padding: 80px 32px;
+      }
+
+      h1 {
+        font-size: 52px;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        color: #666;
+        margin-bottom: 50px;
+      }
+
+      .post {
+        margin-bottom: 40px;
+      }
+
+      .date {
+        color: #888;
+        font-size: 14px;
+        margin-top: 6px;
+      }
+
+      a {
+        text-decoration: none;
+        color: #4a6fa5;
+        font-size: 28px;
+      }
+
+      a:hover {
+        opacity: 0.7;
+      }
+    </style>
   </head>
 
-  <body style="background:#111; color:#d8c9a3; font-family: Georgia;">
-    <main style="max-width:720px; margin:auto; padding:60px;">
+  <body>
+    <main>
+      <h1>gahs notes</h1>
 
-      <h1 style="font-size:40px;">gahs notes</h1>
-
-      <p style="color:gray;">
+      <div class="subtitle">
         Algorithms / Math / Thinking
-      </p>
+      </div>
 
-      <hr style="margin:30px 0; border-color:#333;" />
+      {
+        posts.map(post => (
+          <div class="post">
+            <a href={post.url}>
+              {post.frontmatter.title}
+            </a>
 
-      <a href="/posts/first" style="color:#d8c9a3;">
-        FFT 学习笔记
-      </a>
+            <div class="date">
+              {post.frontmatter.date}
+            </div>
+          </div>
+        ))
+      }
 
     </main>
   </body>

@@ -1,6 +1,8 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: FFT 学习笔记
+date: 2026-05-19
+tags: [算法, FFT, 数学]
 ---
 
 # FFT
@@ -12,12 +14,3 @@ title: FFT 学习笔记
 $$
 f(x)=\sum_{i=0}^{n} a_i x^i
 $$
-
-## 思考
-
-FFT 的核心是“分治 + 单位根”。
-
-以后可以写更多：
-- DP优化
-- 图论
-- 数学推导

@@ -7,26 +7,73 @@ const { frontmatter } = Astro.props;
     <meta charset="UTF-8" />
     <title>{frontmatter.title}</title>
 
-    <!-- KaTeX -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
     />
+
+    <style>
+      body {
+        background: #f5f1e8;
+        color: #2a2a2a;
+        font-family:
+          "Iowan Old Style",
+          "Palatino Linotype",
+          "Times New Roman",
+          serif;
+
+        margin: 0;
+      }
+
+      main {
+        max-width: 760px;
+        margin: auto;
+        padding: 60px 32px;
+      }
+
+      h1 {
+        font-size: 42px;
+        margin-top: 40px;
+      }
+
+      h2 {
+        margin-top: 50px;
+      }
+
+      article {
+        line-height: 1.9;
+        font-size: 18px;
+      }
+
+      a {
+        color: #4a6fa5;
+        text-decoration: none;
+      }
+
+      code {
+        background: #ece7dc;
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+
+      pre {
+        background: #ece7dc;
+        padding: 18px;
+        overflow-x: auto;
+        border-radius: 12px;
+      }
+    </style>
   </head>
 
-  <body style="background:#111; color:#d8c9a3; font-family: Georgia, serif;">
-    <main style="max-width: 720px; margin: auto; padding: 40px;">
+  <body>
+    <main>
+      <a href="/">← Home</a>
 
-      <a href="/" style="color:gray; text-decoration:none;">← Home</a>
+      <h1>{frontmatter.title}</h1>
 
-      <h1 style="margin-top:40px; font-size:36px;">
-        {frontmatter.title}
-      </h1>
-
-      <article style="margin-top:40px; line-height:1.7;">
+      <article>
         <slot />
       </article>
-
     </main>
   </body>
 </html>
