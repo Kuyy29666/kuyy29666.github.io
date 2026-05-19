@@ -1,0 +1,5 @@
+/*
+  X-Frame-Options: DENY
+
+/admin/*
+  Basic-Auth: wyblog:$apr1$guN2P5MA$a18GT05exzBCiB/a4Ney6.

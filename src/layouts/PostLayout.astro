@@ -4,7 +4,7 @@ import '../styles/global.css';
 const { frontmatter } = Astro.props;
 
 const allPosts = Object.values(
-  import.meta.glob('../pages/posts/*.md', { eager: true })
+  import.meta.glob('../content/posts/*.md', { eager: true })
 );
 
 allPosts.sort((a, b) =>

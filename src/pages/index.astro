@@ -2,7 +2,7 @@
 import '../styles/global.css';
 
 const posts = Object.values(
-  import.meta.glob('./posts/*.md', { eager: true })
+  import.meta.glob('../content/posts/*.md', { eager: true })
 );
 
 posts.sort((a, b) =>
