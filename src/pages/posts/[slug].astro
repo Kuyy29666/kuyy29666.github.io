@@ -1,0 +1,25 @@
+---
+import PostLayout from '../../layouts/PostLayout.astro';
+
+export function getStaticPaths() {
+  const posts = import.meta.glob('../content/posts/*.md', { eager: true });
+  
+  const paths = [];
+  for (const [filePath, post] of Object.entries(posts)) {
+    const slug = filePath.split('/').pop().replace('.md', '');
+    paths.push({
+      params: { slug },
+      props: { post },
+    });
+  }
+  
+  return paths;
+}
+
+const { post } = Astro.props;
+const { frontmatter, Content } = post;
+---
+
+<PostLayout frontmatter={frontmatter}>
+  <Content />
+</PostLayout>

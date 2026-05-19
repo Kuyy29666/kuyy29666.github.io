@@ -25,6 +25,8 @@ const sortedPosts = [...allPosts].sort((a, b) =>
     <meta property="og:type" content="article" />
     <meta property="og:url" content={Astro.url} />
     <title>{frontmatter.title} - WY的记事本</title>
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
