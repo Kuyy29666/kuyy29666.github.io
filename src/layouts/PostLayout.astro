@@ -1,0 +1,32 @@
+---
+const { frontmatter } = Astro.props;
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{frontmatter.title}</title>
+
+    <!-- KaTeX -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    />
+  </head>
+
+  <body style="background:#111; color:#d8c9a3; font-family: Georgia, serif;">
+    <main style="max-width: 720px; margin: auto; padding: 40px;">
+
+      <a href="/" style="color:gray; text-decoration:none;">← Home</a>
+
+      <h1 style="margin-top:40px; font-size:36px;">
+        {frontmatter.title}
+      </h1>
+
+      <article style="margin-top:40px; line-height:1.7;">
+        <slot />
+      </article>
+
+    </main>
+  </body>
+</html>
