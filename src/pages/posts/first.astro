@@ -1,0 +1,8 @@
+---
+import PostLayout from '../../layouts/PostLayout.astro';
+import { frontmatter, Content } from '../../content/posts/first.md';
+---
+
+<PostLayout frontmatter={frontmatter}>
+  <Content />
+</PostLayout>

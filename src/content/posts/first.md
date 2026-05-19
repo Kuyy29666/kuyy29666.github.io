@@ -1,8 +1,7 @@
 ---
-layout: ../../layouts/PostLayout.astro
 title: FFT 学习笔记
 date: 2026-05-19
-tags: [算法, FFT, 数学]
+tags: ["算法", "FFT", "数学"]
 ---
 
 # FFT

@@ -7,7 +7,7 @@ const allPosts = Object.values(
   import.meta.glob('../content/posts/*.md', { eager: true })
 );
 
-allPosts.sort((a, b) =>
+const sortedPosts = [...allPosts].sort((a, b) => 
   new Date(b.frontmatter.date) - new Date(a.frontmatter.date)
 );
 ---
@@ -17,6 +17,13 @@ allPosts.sort((a, b) =>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={frontmatter.description || 'WY的记事本 - 个人研究博客'} />
+    <meta name="keywords" content={frontmatter.tags?.join(', ') || '博客, 技术, 研究'} />
+    <meta name="author" content="WY" />
+    <meta property="og:title" content={frontmatter.title} />
+    <meta property="og:description" content={frontmatter.description || 'WY的记事本'} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={Astro.url} />
     <title>{frontmatter.title} - WY的记事本</title>
     <link
       rel="stylesheet"
@@ -62,21 +69,31 @@ allPosts.sort((a, b) =>
           >
             返回首页
           </a>
+          <a
+            href="/tags/"
+            class="block text-[#3a7ab8] hover:text-[#1a5a98] transition-colors py-1"
+          >
+            标签
+          </a>
           <div class="border-t border-[#b8d4e8] my-4 pt-4">
             <div class="text-sm text-[#2a5a8a] mb-2">文章列表</div>
-            {allPosts.map(post => (
-              <a
-                href={post.url}
-                class:list={[
-                  "block py-1 leading-relaxed transition-colors",
-                  post.url === Astro.url.pathname
-                    ? "text-[#1a5a98] font-medium"
-                    : "text-[#3a7ab8] hover:text-[#1a5a98]"
-                ]}
-              >
-                {post.frontmatter.title}
-              </a>
-            ))}
+            {sortedPosts.map(post => {
+              const slug = post.file.split('/').pop().replace('.md', '');
+              const postUrl = `/posts/${slug}/`;
+              return (
+                <a
+                  href={postUrl}
+                  class:list={[
+                    "block py-1 leading-relaxed transition-colors",
+                    postUrl === Astro.url.pathname
+                      ? "text-[#1a5a98] font-medium"
+                      : "text-[#3a7ab8] hover:text-[#1a5a98]"
+                  ]}
+                >
+                  {post.frontmatter.title}
+                </a>
+              );
+            })}
           </div>
         </nav>
       </aside>

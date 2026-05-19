@@ -1,0 +1,133 @@
+---
+import '../../styles/global.css';
+
+const posts = Object.values(
+  import.meta.glob('../content/posts/*.md', { eager: true })
+);
+
+const sortedPosts = [...posts].sort((a, b) => 
+  new Date(b.frontmatter.date) - new Date(a.frontmatter.date)
+);
+
+const tagsMap = new Map();
+posts.forEach(post => {
+  const tags = post.frontmatter.tags || [];
+  tags.forEach(tag => {
+    if (!tagsMap.has(tag)) {
+      tagsMap.set(tag, []);
+    }
+    tagsMap.get(tag).push(post);
+  });
+});
+
+const tags = Array.from(tagsMap.entries()).sort((a, b) => b[1].length - a[1].length);
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="WY的记事本 - 文章标签分类" />
+    <meta name="keywords" content={tags.map(t => t[0]).join(', ') || '标签, 分类'} />
+    <meta name="author" content="WY" />
+    <meta property="og:title" content="标签 - WY的记事本" />
+    <meta property="og:description" content="WY的记事本文章标签分类" />
+    <title>标签 - WY的记事本</title>
+  </head>
+
+  <body class="min-h-screen bg-[#fefbf6]">
+    <header class="bg-[#d4eaf7] border-b border-[#b8d4e8] px-8 py-5">
+      <a href="/" class="text-2xl font-normal tracking-wide text-[#2a5a8a] hover:text-[#1a5a98] transition-colors">
+        WY的记事本
+      </a>
+    </header>
+
+    <div class="flex min-h-[calc(100vh-72px)]">
+      <aside class="w-64 flex-shrink-0 bg-[#d4eaf7] p-6 border-r border-[#b8d4e8]">
+        <h2 class="text-lg font-normal text-[#2a5a8a] mb-4 pb-2 border-b border-[#b8d4e8]">
+          目录
+        </h2>
+        <nav class="space-y-3">
+          <a
+            href="/"
+            class="block text-[#3a7ab8] hover:text-[#1a5a98] transition-colors py-1"
+          >
+            返回首页
+          </a>
+          <a
+            href="/tags/"
+            class="block text-[#1a5a98] font-medium py-1"
+          >
+            标签
+          </a>
+          <div class="border-t border-[#b8d4e8] my-4 pt-4">
+            <div class="text-sm text-[#2a5a8a] mb-2">文章列表</div>
+            {sortedPosts.map(post => {
+              const slug = post.file.split('/').pop().replace('.md', '');
+              return (
+                <a
+                  href={`/posts/${slug}/`}
+                  class="block text-[#3a7ab8] hover:text-[#1a5a98] transition-colors py-1 leading-relaxed"
+                >
+                  {post.frontmatter.title}
+                </a>
+              );
+            })}
+          </div>
+        </nav>
+      </aside>
+
+      <main class="flex-1 px-12 py-10">
+        <div class="max-w-3xl">
+          <header class="mb-10">
+            <h2 class="text-4xl font-normal text-[#333] mb-3 tracking-wide">
+              标签
+            </h2>
+            <p class="text-[#666] text-lg leading-relaxed">
+              共 {tags.length} 个标签
+            </p>
+          </header>
+
+          <section class="space-y-8">
+            {tags.length === 0 ? (
+              <div class="text-[#666] text-lg">
+                暂无标签
+              </div>
+            ) : (
+              tags.map(([tag, tagPosts]) => (
+                <article class="border-l-4 border-[#d4eaf7] pl-6 py-4">
+                  <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-2xl text-[#333] leading-relaxed">
+                      #{tag}
+                    </h3>
+                    <span class="text-sm text-[#888]">
+                      {tagPosts.length} 篇文章
+                    </span>
+                  </div>
+                  <ul class="space-y-2">
+                    {tagPosts.map(post => {
+                      const slug = post.file.split('/').pop().replace('.md', '');
+                      return (
+                        <li>
+                          <a
+                            href={`/posts/${slug}/`}
+                            class="text-lg text-[#3a7ab8] hover:text-[#1a5a98] transition-colors leading-relaxed"
+                          >
+                            {post.frontmatter.title}
+                          </a>
+                          <span class="text-sm text-[#999] ml-3">
+                            {post.frontmatter.date}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </article>
+              ))
+            )}
+          </section>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

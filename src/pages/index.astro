@@ -5,7 +5,7 @@ const posts = Object.values(
   import.meta.glob('../content/posts/*.md', { eager: true })
 );
 
-posts.sort((a, b) =>
+const sortedPosts = [...posts].sort((a, b) => 
   new Date(b.frontmatter.date) - new Date(a.frontmatter.date)
 );
 ---
@@ -13,6 +13,13 @@ posts.sort((a, b) =>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="WY的记事本 - 个人研究博客，分享算法、数学等领域的学习笔记" />
+    <meta name="keywords" content="博客, 算法, 数学, 研究, 学习笔记" />
+    <meta name="author" content="WY" />
+    <meta property="og:title" content="WY的记事本" />
+    <meta property="og:description" content="WY的记事本 - 个人研究博客" />
+    <meta property="og:type" content="website" />
     <title>WY的记事本</title>
   </head>
 
@@ -35,14 +42,23 @@ posts.sort((a, b) =>
           >
             首页
           </a>
-          {posts.map(post => (
-            <a
-              href={post.url}
-              class="block text-[#3a7ab8] hover:text-[#1a5a98] transition-colors py-1 leading-relaxed"
-            >
-              {post.frontmatter.title}
-            </a>
-          ))}
+          <a
+            href="/tags/"
+            class="block text-[#3a7ab8] hover:text-[#1a5a98] transition-colors py-1"
+          >
+            标签
+          </a>
+          {sortedPosts.map(post => {
+            const slug = post.file.split('/').pop().replace('.md', '');
+            return (
+              <a
+                href={`/posts/${slug}/`}
+                class="block text-[#3a7ab8] hover:text-[#1a5a98] transition-colors py-1 leading-relaxed"
+              >
+                {post.frontmatter.title}
+              </a>
+            );
+          })}
         </nav>
       </aside>
 
@@ -58,22 +74,25 @@ posts.sort((a, b) =>
           </header>
 
           <section class="space-y-6">
-            {posts.map(post => (
-              <article class="group border-l-4 border-[#d4eaf7] pl-6 py-2 hover:border-[#3a7ab8] transition-colors">
-                <div class="text-sm text-[#888] mb-1">
-                  {post.frontmatter.date}
-                </div>
-                <a
-                  href={post.url}
-                  class="text-2xl text-[#333] group-hover:text-[#2a5a8a] transition-colors leading-relaxed"
-                >
-                  {post.frontmatter.title}
-                </a>
-                <div class="text-sm text-[#999] mt-2">
-                  {post.frontmatter.tags?.join(' · ')}
-                </div>
-              </article>
-            ))}
+            {sortedPosts.map(post => {
+              const slug = post.file.split('/').pop().replace('.md', '');
+              return (
+                <article class="group border-l-4 border-[#d4eaf7] pl-6 py-2 hover:border-[#3a7ab8] transition-colors">
+                  <div class="text-sm text-[#888] mb-1">
+                    {post.frontmatter.date}
+                  </div>
+                  <a
+                    href={`/posts/${slug}/`}
+                    class="text-2xl text-[#333] group-hover:text-[#2a5a8a] transition-colors leading-relaxed"
+                  >
+                    {post.frontmatter.title}
+                  </a>
+                  <div class="text-sm text-[#999] mt-2">
+                    {post.frontmatter.tags?.join(' · ')}
+                  </div>
+                </article>
+              );
+            })}
           </section>
         </div>
       </main>
