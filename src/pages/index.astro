@@ -23,6 +23,38 @@ const sortedPosts = [...posts].sort((a, b) =>
     <title>WY的记事本</title>
     <!-- Netlify Identity Widget -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      function initNetlifyIdentity() {
+        if (window.netlifyIdentity) {
+          // 检查是否有邀请令牌
+          const hasInviteToken = window.location.hash.includes('invite_token');
+          
+          window.netlifyIdentity.on('init', function(user) {
+            if (!user) {
+              window.netlifyIdentity.on('login', function() {
+                document.location.href = '/admin/';
+              });
+              
+              // 如果有邀请令牌，自动打开注册弹窗
+              if (hasInviteToken) {
+                setTimeout(function() {
+                  window.netlifyIdentity.open('signup');
+                }, 500);
+              }
+            }
+          });
+          
+          window.netlifyIdentity.init();
+        }
+      }
+      
+      // 确保脚本加载后初始化
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initNetlifyIdentity);
+      } else {
+        initNetlifyIdentity();
+      }
+    </script>
   </head>
 
   <body class="min-h-screen bg-[#fefbf6]">
