@@ -1,39 +1,45 @@
 ---
+import '../styles/global.css';
 const { frontmatter } = Astro.props;
 ---
 
+<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
     <title>{frontmatter.title}</title>
 
+    <!-- KaTeX 公式渲染所必需的样式 -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
     />
   </head>
 
-  <body class="bg-[#fbfbfb] text-[#222]">
+  {/* 💡 修改 1：将字体配置移到 body 上（此处使用宋体/衬线体营造论文感，你也可以根据喜好在 global.css 中精细调整） */}
+  <body class="bg-[#fbfbfb] text-[#222222] antialiased font-serif">
 
-    <!-- ✅ 核心：居中容器 -->
-    <main class="max-w-3xl mx-auto px-6 py-10">
+    <!-- 💡 修改 2：限制单行阅读宽度（max-w-[65ch]），符合研究风最佳视线宽度 -->
+    <main class="max-w-[65ch] mx-auto px-6 py-12">
 
-      <nav class="text-sm text-gray-500 mb-8">
-        <a href="/" class="hover:text-black">← Home</a>
+      {/* 极简导航 */}
+      <nav class="text-sm mb-12">
+        <a href="/" class="text-gray-500 hover:text-black no-underline transition-colors">← Home</a>
       </nav>
 
+      {/* 文章头部 */}
       <header class="mb-10">
-        <h1 class="text-4xl font-semibold tracking-tight mb-2">
+        <h1 class="text-3xl font-bold tracking-tight text-black mb-3 font-sans">
           {frontmatter.title}
         </h1>
-
-        <div class="text-sm text-gray-500">
+        <div class="text-sm text-gray-400 font-sans">
           {frontmatter.date}
         </div>
       </header>
 
-      <!-- ✅ 关键：prose 排版恢复 -->
-      <article class="prose prose-neutral max-w-none">
+      <!-- 💡 修改 3：完美契合 Tailwind v4 的 prose 配置 -->
+      <article class="prose prose-neutral max-w-none prose-headings:font-sans prose-headings:font-bold prose-p:leading-relaxed">
         <slot />
       </article>
 

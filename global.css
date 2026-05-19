@@ -1,18 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss"; /* 💡 注入 Tailwind 核心样式 */
 
-/* ===== 设计变量（学术风） ===== */
-:root {
-  --bg: #fbfbfb;
-  --text: #222;
-  --muted: #666;
-  --accent: #1d4ed8;
-}
-
-/* 基础 */
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: Georgia, serif;
-}
+/* 💡 注入文章排版插件 (取代了老版本的 tailwind.config.js 插件配置) */
+@plugin "@tailwindcss/typography";

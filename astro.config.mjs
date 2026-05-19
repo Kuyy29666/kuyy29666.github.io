@@ -1,17 +1,9 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
-import remarkToc from 'remark-toc';
+import tailwindcss from '@tailwindcss/vite'; // 💡 引入 Tailwind v4 的 Vite 插件
 
 export default defineConfig({
-  integrations: [tailwind()],
-
-  markdown: {
-    remarkPlugins: [remarkMath, remarkToc],
-    rehypePlugins: [rehypeKatex],
+  // 极简风格不需要其他的 integration，直接写在 vite 配置里
+  vite: {
+    plugins: [tailwindcss()],
   },
-
-  site: 'https://kuyy29666.github.io',
 });
