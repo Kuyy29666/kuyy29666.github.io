@@ -1,0 +1,30 @@
+# 后端连接配置
+backend:
+  name: github
+  repo: 你的GitHub用户名/你的仓库名  # ⚠️【记得修改这里！】例如：kuyy29666/kuyy29666.github.io
+  branch: main # 你的主分支名字，通常是 main 或 master
+
+# 媒体文件（图片）存放路径
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+# 定义你的内容集合
+collections:
+  - name: "blog" # 集合内部标识
+    label: "文章列表" # 后台左侧显示的文字
+    folder: "src/content/posts" # ⚠️【根据你实际存放 Markdown 的文件夹修改！】
+    create: true # 允许在后台新建文章
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # 自动生成的文件名格式
+    fields: # 网页编辑器上的输入框配置
+      - { label: "文章标题", name: "title", widget: "string" }
+      - { label: "发布日期", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "描述摘要", name: "description", widget: "text", required: false }
+      - { label: "正文内容", name: "body", widget: "markdown" }
+
+backend:
+  name: github
+  repo: 你的GitHub用户名/你的仓库名
+  branch: main
+  # 💡 新增下面两行，借用社区的免费网关（或者使用 Netlify 托管）
+  base_url: https://proxy.decapcms.org
+  auth_endpoint: /api/v1/authorize

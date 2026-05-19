@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 const posts = Object.values(
   import.meta.glob('./posts/*.md', { eager: true })
 );
@@ -11,51 +13,70 @@ posts.sort((a, b) =>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <title>gahs notes</title>
+    <title>WY的记事本</title>
   </head>
 
-  <body class="bg-[#fbfbfb] text-[#222]">
+  <body class="min-h-screen bg-[#fefbf6]">
+    <header class="bg-[#d4eaf7] border-b border-[#b8d4e8] px-8 py-5">
+      <h1 class="text-2xl font-normal tracking-wide text-[#2a5a8a]">
+        WY的记事本
+      </h1>
+    </header>
 
-    <main class="max-w-3xl mx-auto px-6 py-12">
-
-      <!-- Header -->
-      <header class="mb-12">
-        <h1 class="text-5xl font-semibold tracking-tight mb-2">
-          gahs notes
-        </h1>
-
-        <p class="text-gray-500">
-          Algorithms · Math · Thinking
-        </p>
-
-        <div class="mt-4 text-sm">
-          <a href="/tags" class="text-blue-600 hover:underline">
-            Tags
+    <div class="flex min-h-[calc(100vh-72px)]">
+      <aside class="w-64 flex-shrink-0 bg-[#d4eaf7] p-6 border-r border-[#b8d4e8]">
+        <h2 class="text-lg font-normal text-[#2a5a8a] mb-4 pb-2 border-b border-[#b8d4e8]">
+          目录
+        </h2>
+        <nav class="space-y-3">
+          <a
+            href="/"
+            class="block text-[#3a7ab8] hover:text-[#1a5a98] transition-colors py-1"
+          >
+            首页
           </a>
-        </div>
-      </header>
-
-      <!-- Posts -->
-      <section class="space-y-8">
-
-        {posts.map(post => (
-          <div class="group">
-            <div class="text-sm text-gray-500">
-              {post.frontmatter.date}
-            </div>
-
+          {posts.map(post => (
             <a
               href={post.url}
-              class="text-2xl font-medium group-hover:text-blue-600 transition"
+              class="block text-[#3a7ab8] hover:text-[#1a5a98] transition-colors py-1 leading-relaxed"
             >
               {post.frontmatter.title}
             </a>
-          </div>
-        ))}
+          ))}
+        </nav>
+      </aside>
 
-      </section>
+      <main class="flex-1 px-12 py-10">
+        <div class="max-w-3xl">
+          <header class="mb-10">
+            <h2 class="text-4xl font-normal text-[#333] mb-3 tracking-wide">
+              所有文章
+            </h2>
+            <p class="text-[#666] text-lg leading-relaxed">
+              共 {posts.length} 篇
+            </p>
+          </header>
 
-    </main>
-
+          <section class="space-y-6">
+            {posts.map(post => (
+              <article class="group border-l-4 border-[#d4eaf7] pl-6 py-2 hover:border-[#3a7ab8] transition-colors">
+                <div class="text-sm text-[#888] mb-1">
+                  {post.frontmatter.date}
+                </div>
+                <a
+                  href={post.url}
+                  class="text-2xl text-[#333] group-hover:text-[#2a5a8a] transition-colors leading-relaxed"
+                >
+                  {post.frontmatter.title}
+                </a>
+                <div class="text-sm text-[#999] mt-2">
+                  {post.frontmatter.tags?.join(' · ')}
+                </div>
+              </article>
+            ))}
+          </section>
+        </div>
+      </main>
+    </div>
   </body>
 </html>

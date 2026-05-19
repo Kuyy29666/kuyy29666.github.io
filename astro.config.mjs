@@ -1,8 +1,13 @@
 import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite'; // 💡 引入 Tailwind v4 的 Vite 插件
+import tailwindcss from '@tailwindcss/vite';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 export default defineConfig({
-  // 极简风格不需要其他的 integration，直接写在 vite 配置里
+  markdown: {
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex],
+  },
   vite: {
     plugins: [tailwindcss()],
   },

@@ -1,4 +1,38 @@
-@import "tailwindcss"; /* 💡 注入 Tailwind 核心样式 */
+@import "tailwindcss";
 
-/* 💡 注入文章排版插件 (取代了老版本的 tailwind.config.js 插件配置) */
 @plugin "@tailwindcss/typography";
+
+@theme {
+  --font-kai: "楷体", "STKaiti", "KaiTi", "FZKai-Z03", serif;
+  --color-light-blue: #e8f4fc;
+  --color-light-yellow: #fefbf6;
+}
+
+* {
+  font-family: var(--font-kai);
+}
+
+body {
+  background-color: var(--color-light-yellow);
+}
+
+.sidebar {
+  background-color: #d4eaf7;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-light-yellow);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a8d4f0;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8bc4e8;
+}

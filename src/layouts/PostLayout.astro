@@ -1,6 +1,15 @@
 ---
 import '../styles/global.css';
+
 const { frontmatter } = Astro.props;
+
+const allPosts = Object.values(
+  import.meta.glob('../pages/posts/*.md', { eager: true })
+);
+
+allPosts.sort((a, b) =>
+  new Date(b.frontmatter.date) - new Date(a.frontmatter.date)
+);
 ---
 
 <!doctype html>
@@ -8,41 +17,91 @@ const { frontmatter } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{frontmatter.title}</title>
-
-    <!-- KaTeX 公式渲染所必需的样式 -->
+    <title>{frontmatter.title} - WY的记事本</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
     />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    ></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+          ],
+          throwOnError: false,
+        });
+      });
+    </script>
   </head>
 
-  {/* 💡 修改 1：将字体配置移到 body 上（此处使用宋体/衬线体营造论文感，你也可以根据喜好在 global.css 中精细调整） */}
-  <body class="bg-[#fbfbfb] text-[#222222] antialiased font-serif">
+  <body class="min-h-screen bg-[#fefbf6]">
+    <header class="bg-[#d4eaf7] border-b border-[#b8d4e8] px-8 py-5">
+      <a href="/" class="text-2xl font-normal tracking-wide text-[#2a5a8a] hover:text-[#1a5a98] transition-colors">
+        WY的记事本
+      </a>
+    </header>
 
-    <!-- 💡 修改 2：限制单行阅读宽度（max-w-[65ch]），符合研究风最佳视线宽度 -->
-    <main class="max-w-[65ch] mx-auto px-6 py-12">
+    <div class="flex min-h-[calc(100vh-72px)]">
+      <aside class="w-64 flex-shrink-0 bg-[#d4eaf7] p-6 border-r border-[#b8d4e8]">
+        <h2 class="text-lg font-normal text-[#2a5a8a] mb-4 pb-2 border-b border-[#b8d4e8]">
+          目录
+        </h2>
+        <nav class="space-y-3">
+          <a
+            href="/"
+            class="block text-[#3a7ab8] hover:text-[#1a5a98] transition-colors py-1"
+          >
+            返回首页
+          </a>
+          <div class="border-t border-[#b8d4e8] my-4 pt-4">
+            <div class="text-sm text-[#2a5a8a] mb-2">文章列表</div>
+            {allPosts.map(post => (
+              <a
+                href={post.url}
+                class:list={[
+                  "block py-1 leading-relaxed transition-colors",
+                  post.url === Astro.url.pathname
+                    ? "text-[#1a5a98] font-medium"
+                    : "text-[#3a7ab8] hover:text-[#1a5a98]"
+                ]}
+              >
+                {post.frontmatter.title}
+              </a>
+            ))}
+          </div>
+        </nav>
+      </aside>
 
-      {/* 极简导航 */}
-      <nav class="text-sm mb-12">
-        <a href="/" class="text-gray-500 hover:text-black no-underline transition-colors">← Home</a>
-      </nav>
+      <main class="flex-1 px-12 py-10">
+        <article class="max-w-3xl">
+          <header class="mb-10 pb-6 border-b border-[#e0e0e0]">
+            <h1 class="text-4xl font-normal text-[#333] mb-4 tracking-wide leading-relaxed">
+              {frontmatter.title}
+            </h1>
+            <div class="text-[#888] text-lg leading-relaxed">
+              {frontmatter.date}
+            </div>
+            {frontmatter.tags && (
+              <div class="text-[#999] text-base mt-3 leading-relaxed">
+                {frontmatter.tags.join(' · ')}
+              </div>
+            )}
+          </header>
 
-      {/* 文章头部 */}
-      <header class="mb-10">
-        <h1 class="text-3xl font-bold tracking-tight text-black mb-3 font-sans">
-          {frontmatter.title}
-        </h1>
-        <div class="text-sm text-gray-400 font-sans">
-          {frontmatter.date}
-        </div>
-      </header>
-
-      <!-- 💡 修改 3：完美契合 Tailwind v4 的 prose 配置 -->
-      <article class="prose prose-neutral max-w-none prose-headings:font-sans prose-headings:font-bold prose-p:leading-relaxed">
-        <slot />
-      </article>
-
-    </main>
+          <div class="prose prose-lg max-w-none prose-headings:font-normal prose-headings:tracking-wide prose-p:leading-loose prose-li:leading-relaxed text-[#333]">
+            <slot />
+          </div>
+        </article>
+      </main>
+    </div>
   </body>
 </html>
